@@ -3,7 +3,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 import pandas as pd
 
-df=pd.read_csv(r'C:\Users\LENOVO\OneDrive\Desktop\OPTION_CHAIN_ETL_PROJECT\complete.csv')
+# df=pd.read_csv(r'C:\Users\LENOVO\OneDrive\Desktop\OPTION_CHAIN_ETL_PROJECT\complete.csv')
 
 
 # Function to fetch historical data for a given time period
