@@ -13,68 +13,22 @@ start_date = (datetime.today() - timedelta(days=2)).strftime('%Y-%m-%d')
 
 # Database connection parameters
 db_params = {
-    'dbname': 'postgres',  # Initially connect to default 'postgres' database
+    'dbname': 'daily-data-fetch',  # Initially connect to default 'postgres' database
     'user': 'postgres',
     'password': 'Lexicon#11',
     'host': 'daily-data-fetch.c7m8wwkmaj1u.ap-southeast-2.rds.amazonaws.com',
     'port': '5432'
 }
 
-# Establish initial connection to PostgreSQL to create the database if not exists
+# Establish connection to PostgreSQL database
 conn = psycopg2.connect(**db_params)
 cursor = conn.cursor()
-
-# Check if the target database exists
-cursor.execute("""
-    SELECT 1 FROM pg_database WHERE datname = 'daily-data-fetch';
-""")
-if cursor.fetchone() is None:
-    # If database does not exist, commit and close the current connection
-    conn.commit()  # Commit any active transactions
-    cursor.close()
-    conn.close()
-
-    # Reconnect to the default database to create the new database
-    conn = psycopg2.connect(dbname="postgres", user="postgres", password="Lexicon#11", host="daily-data-fetch.c7m8wwkmaj1u.ap-southeast-2.rds.amazonaws.com", port="5432")
-    cursor = conn.cursor()
-
-    # Create the database
-    cursor.execute('CREATE DATABASE "daily-data-fetch";')
-    print("Database 'daily-data-fetch' created successfully!")
-
-    cursor.close()  # Close the cursor after creating the database
-    conn.close()    # Close the connection
-
-# Reconnect to the newly created database
-db_params['dbname'] = 'daily-data-fetch'
-conn = psycopg2.connect(**db_params)
-cursor = conn.cursor()
-
-# Check if the required table exists
-cursor.execute("""
-    SELECT to_regclass('public.your_table_name');
-""")
-if cursor.fetchone()[0] is None:
-    # Create table if it does not exist
-    create_table_query = """
-    CREATE TABLE your_table_name (
-        date DATE,
-        instrument_key VARCHAR(50),
-        open FLOAT,
-        high FLOAT,
-        low FLOAT,
-        close FLOAT,
-        volume INTEGER
-    );
-    """
-    cursor.execute(create_table_query)
-    print("Table 'your_table_name' created successfully!")
 
 # Loop through each instrument and fetch data
 for instrument_key in df['instrument_key']:
 
     df_current_period = fetch_historical_data(instrument_key, start_date, end_date)
-
+    
     # If data is found, insert it into PostgreSQL
     if not df_current_period.empty:
         # Iterate through the rows and insert them into the database
