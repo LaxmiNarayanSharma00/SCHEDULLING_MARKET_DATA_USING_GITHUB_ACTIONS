@@ -1,7 +1,7 @@
 from datetime import datetime,timedelta
 from src.api import fetch_historical_data
 import pandas as pd
-df=pd.read_csv(r'../ind_nifty50list.csv')
+df=pd.read_csv(r'ind_nifty50list.csv')
 
 end_date = (datetime.today() - timedelta(days=1)).strftime('%Y-%m-%d')
 start_date = (datetime.today() - timedelta(days=2)).strftime('%Y-%m-%d')
