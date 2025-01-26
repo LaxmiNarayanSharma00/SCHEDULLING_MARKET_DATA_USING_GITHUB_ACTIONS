@@ -29,7 +29,8 @@ cursor.execute("""
     SELECT 1 FROM pg_database WHERE datname = 'daily-data-fetch';
 """)
 if cursor.fetchone() is None:
-    # If database does not exist, close the current connection and cursor
+    # If database does not exist, commit and close the current connection
+    conn.commit()  # Commit any active transactions
     cursor.close()
     conn.close()
 
@@ -37,6 +38,7 @@ if cursor.fetchone() is None:
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="Lexicon#11", host="daily-data-fetch.c7m8wwkmaj1u.ap-southeast-2.rds.amazonaws.com", port="5432")
     cursor = conn.cursor()
 
+    # Create the database
     cursor.execute('CREATE DATABASE "daily-data-fetch";')
     print("Database 'daily-data-fetch' created successfully!")
 
