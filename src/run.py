@@ -11,7 +11,7 @@ start_date = (datetime.today() - timedelta(days=2)).strftime('%Y-%m-%d')
 db_params={
     'dbname': 'daily-data-fetch',
     'user': 'postgres',
-    'paasword': 'Lexicon#11',
+    'password': 'Lexicon#11',
     'host': 'daily-data-fetch.c7m8wwkmaj1u.ap-southeast-2.rds.amazonaws.com',
     'port': '5432'
 }
