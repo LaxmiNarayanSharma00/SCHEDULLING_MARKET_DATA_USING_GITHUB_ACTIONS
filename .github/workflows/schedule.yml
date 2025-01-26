@@ -18,6 +18,10 @@ jobs:
         with:
           python-version: 3.10  # Correct version
 
+      - name: Check Python version
+        run: python --version
+  
+
       - name: Clear pip cache
         run: pip cache purge  # Optional but clears cache for fresh run
 
