@@ -35,7 +35,7 @@ for instrument_key in df['instrument_key']:
         for index, row in df_current_period.iterrows():
             # Assuming 'date', 'instrument_key', 'open', 'high', 'low', 'close', 'volume' columns exist
             insert_query = sql.SQL("""
-                INSERT INTO your_table_name (date, instrument_key, open, high, low, close, volume)
+                INSERT INTO laxmi (date, instrument_key, open, high, low, close, volume)
                 VALUES (%s, %s, %s, %s, %s, %s, %s)
             """)
             cursor.execute(insert_query, (row[0][0], instrument_key, row[0][1], row[0][2], row[0][3], row[0][4], row[0][5]))
