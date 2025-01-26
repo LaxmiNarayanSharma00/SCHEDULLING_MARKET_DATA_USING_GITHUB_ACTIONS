@@ -44,7 +44,7 @@ for instrument_key in df['instrument_key']:
         conn.commit()
     
     print(f"Data for {instrument_key} inserted successfully!")
-
+    break
 # Close the cursor and connection
 cursor.close()
 conn.close()
