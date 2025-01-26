@@ -29,11 +29,11 @@ cursor.execute("""
     SELECT 1 FROM pg_database WHERE datname = 'daily-data-fetch';
 """)
 if cursor.fetchone() is None:
-    # If database does not exist, create it
-    cursor.close()  # Close the cursor before creating the database
-    conn.close()    # Close the current connection
+    # If database does not exist, close the current connection and cursor
+    cursor.close()
+    conn.close()
 
-    # Create a new connection to the default database
+    # Reconnect to the default database to create the new database
     conn = psycopg2.connect(dbname="postgres", user="postgres", password="Lexicon#11", host="daily-data-fetch.c7m8wwkmaj1u.ap-southeast-2.rds.amazonaws.com", port="5432")
     cursor = conn.cursor()
 
